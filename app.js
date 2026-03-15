@@ -26,7 +26,7 @@ class MovieTracker {
     }
 
     addEventListeners() {
-        document.getElementById('add-movie-form').addEventListener('submit', this.addMovie.bind(this));
+        document.getElementById('movie-form').addEventListener('submit', this.addMovie.bind(this));
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', this.changeView.bind(this));
         });
@@ -61,7 +61,7 @@ class MovieTracker {
     renderMovies() {
         const movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
-        let filteredMovies = this.filterMovies();
+        const filteredMovies = this.getFilteredMovies();
         filteredMovies.forEach(movie => {
             const li = document.createElement('li');
             li.className = 'movie-item';
@@ -82,34 +82,30 @@ class MovieTracker {
         });
     }
 
-    filterMovies() {
-        let filteredMovies = this.movies;
-        const search = document.getElementById('search').value.toLowerCase();
+    getFilteredMovies() {
+        const searchTerm = document.getElementById('search').value.toLowerCase();
         const genreFilter = document.getElementById('filter-genre').value;
         const yearFilter = document.getElementById('filter-year').value;
         const ratingFilter = document.getElementById('filter-rating').value;
 
-        if (this.currentView === 'watched') {
-            filteredMovies = filteredMovies.filter(movie => movie.watched);
-        } else if (this.currentView === 'to-watch') {
-            filteredMovies = filteredMovies.filter(movie => !movie.watched);
-        }
+        return this.movies.filter(movie => {
+            const matchesSearch = movie.title.toLowerCase().includes(searchTerm);
+            const matchesGenre = genreFilter === '' || movie.genre === genreFilter;
+            const matchesYear = yearFilter === '' || movie.releaseYear.toString() === yearFilter;
+            const matchesRating = ratingFilter === '' || (movie.watched && movie.rating && movie.rating.toString() === ratingFilter);
+            const matchesView = this.currentView === 'all' || 
+                (this.currentView === 'watched' && movie.watched) || 
+                (this.currentView === 'to-watch' && !movie.watched);
 
-        return filteredMovies.filter(movie => 
-            movie.title.toLowerCase().includes(search) &&
-            (genreFilter === '' || movie.genre === genreFilter) &&
-            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
-            (ratingFilter === '' || (movie.rating && movie.rating.toString() === ratingFilter))
-        );
+            return matchesSearch && matchesGenre && matchesYear && matchesRating && matchesView;
+        });
     }
 
     toggleWatched(id) {
         const movie = this.movies.find(m => m.id === id);
         if (movie) {
             movie.watched = !movie.watched;
-            if (!movie.watched) {
-                movie.rating = null;
-            }
+            if (!movie.watched) movie.rating = null;
             this.saveMovies();
             this.renderMovies();
         }
