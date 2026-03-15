@@ -8,7 +8,7 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     padding: 20px;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -48,42 +48,41 @@ button:hover {
     background-color: #555;
 }
 
-nav {
+#movie-lists nav {
     display: flex;
     gap: 10px;
     margin-bottom: 1rem;
 }
 
+.tab {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
 .tab.active {
-    background-color: #555;
+    background-color: #333;
+    color: #fff;
+}
+
+#movie-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.movie-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
 }
 
 #search-filter {
     display: flex;
     gap: 10px;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
-#movie-list {
-    list-style-type: none;
-}
-
-.movie-item {
-    background-color: #f4f4f4;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-}
-
-.movie-item h3 {
-    margin-bottom: 0.5rem;
-}
-
-.movie-item p {
-    margin-bottom: 0.5rem;
-}
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     form, #search-filter {
         flex-direction: column;
     }
