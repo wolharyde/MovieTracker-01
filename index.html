@@ -12,17 +12,37 @@
         <h1>MovieTracker-01</h1>
     </header>
     <main>
-        <section id="add-movie-form">
-            <!-- Add movie form will go here -->
+        <section id="add-movie">
+            <h2>Add Movie</h2>
+            <form id="add-movie-form">
+                <input type="text" id="title" placeholder="Title" required>
+                <input type="number" id="releaseYear" placeholder="Release Year" required>
+                <input type="text" id="genre" placeholder="Genre" required>
+                <button type="submit">Add Movie</button>
+            </form>
         </section>
-        <section id="movie-list-tabs">
-            <!-- Tabs for different list views will go here -->
+        <section id="movie-lists">
+            <nav>
+                <button class="tab active" data-tab="all">All Movies</button>
+                <button class="tab" data-tab="watched">Watched</button>
+                <button class="tab" data-tab="to-watch">To Watch</button>
+            </nav>
+            <div id="movie-container"></div>
         </section>
         <section id="search-filter">
-            <!-- Search and filter options will go here -->
-        </section>
-        <section id="movie-list">
-            <!-- Movie list display area will go here -->
+            <input type="text" id="search" placeholder="Search by title">
+            <select id="filter-genre">
+                <option value="">All Genres</option>
+            </select>
+            <input type="number" id="filter-year" placeholder="Filter by year">
+            <select id="filter-rating">
+                <option value="">All Ratings</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+                <option value="5">5</option>
+            </select>
         </section>
     </main>
     <script src="app.js"></script>
