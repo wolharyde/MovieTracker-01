@@ -1,29 +1,33 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
+    background-color: #f4f4f4;
     padding: 1rem;
+    text-align: center;
 }
 
-main {
-    padding: 2rem;
-}
-
-#add-movie, #movie-lists {
-    margin-bottom: 2rem;
+h1, h2 {
+    margin-bottom: 1rem;
 }
 
 form {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 10px;
+    margin-bottom: 1rem;
 }
 
 input, select, button {
@@ -33,29 +37,56 @@ input, select, button {
 
 button {
     cursor: pointer;
-    background-color: #333;
-    color: #fff;
+    background-color: #007bff;
+    color: white;
     border: none;
+    border-radius: 4px;
 }
 
 button:hover {
-    background-color: #555;
+    background-color: #0056b3;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.tab {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#search-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
 }
 
 #movie-list {
     list-style-type: none;
-    padding: 0;
 }
 
 .movie-item {
-    background-color: #f4f4f4;
-    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     padding: 1rem;
-    border-radius: 5px;
+    margin-bottom: 1rem;
+    border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-    form {
+.movie-item button {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    form, #search-filter {
         flex-direction: column;
     }
 }
