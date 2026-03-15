@@ -42,20 +42,6 @@ button:hover {
     background-color: #555;
 }
 
-nav {
-    margin-bottom: 1rem;
-}
-
-.tab {
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-.tab.active {
-    background-color: #333;
-    color: #fff;
-}
-
 #movie-list {
     list-style-type: none;
     padding: 0;
