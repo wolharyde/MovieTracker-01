@@ -16,11 +16,14 @@ main {
     padding: 2rem;
 }
 
+#add-movie-form {
+    margin-bottom: 2rem;
+}
+
 form {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin-bottom: 2rem;
 }
 
 input, select, button {
@@ -33,17 +36,20 @@ button {
     background-color: #333;
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
 }
 
 button:hover {
     background-color: #555;
 }
 
+nav {
+    margin-bottom: 1rem;
+}
+
 .tab {
     background-color: #f4f4f4;
     border: none;
-    color: #333;
+    padding: 0.5rem 1rem;
 }
 
 .tab.active {
@@ -51,24 +57,26 @@ button:hover {
     color: #fff;
 }
 
-#movie-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+#search-filter {
+    margin-bottom: 1rem;
 }
 
-.movie-card {
-    border: 1px solid #ddd;
+#movie-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.movie-item {
+    background-color: #f4f4f4;
+    margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
-    form {
+    form, #search-filter {
         flex-direction: column;
-    }
-    
-    #movie-container {
-        grid-template-columns: 1fr;
     }
 }
