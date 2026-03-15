@@ -12,9 +12,9 @@
         <h1>MovieTracker-01</h1>
     </header>
     <main>
-        <section id="add-movie">
+        <section id="add-movie-form">
             <h2>Add Movie</h2>
-            <form id="add-movie-form">
+            <form id="movie-form">
                 <input type="text" id="title" placeholder="Title" required>
                 <input type="number" id="releaseYear" placeholder="Release Year" required>
                 <input type="text" id="genre" placeholder="Genre" required>
@@ -27,22 +27,19 @@
                 <button class="tab" data-tab="watched">Watched</button>
                 <button class="tab" data-tab="to-watch">To Watch</button>
             </nav>
-            <div id="movie-container"></div>
-        </section>
-        <section id="search-filter">
-            <input type="text" id="search" placeholder="Search by title">
-            <select id="filter-genre">
-                <option value="">All Genres</option>
-            </select>
-            <input type="number" id="filter-year" placeholder="Filter by year">
-            <select id="filter-rating">
-                <option value="">All Ratings</option>
-                <option value="1">1+</option>
-                <option value="2">2+</option>
-                <option value="3">3+</option>
-                <option value="4">4+</option>
-                <option value="5">5</option>
-            </select>
+            <div id="search-filter">
+                <input type="text" id="search" placeholder="Search by title">
+                <select id="filter-genre">
+                    <option value="">All Genres</option>
+                </select>
+                <select id="filter-year">
+                    <option value="">All Years</option>
+                </select>
+                <select id="filter-rating">
+                    <option value="">All Ratings</option>
+                </select>
+            </div>
+            <ul id="movie-list"></ul>
         </section>
     </main>
     <script src="app.js"></script>
