@@ -12,9 +12,9 @@
         <h1>MovieTracker-01</h1>
     </header>
     <main>
-        <section id="add-movie-form">
+        <section id="add-movie">
             <h2>Add Movie</h2>
-            <form id="movie-form">
+            <form id="add-movie-form">
                 <input type="text" id="title" placeholder="Title" required>
                 <input type="number" id="releaseYear" placeholder="Release Year" required>
                 <input type="text" id="genre" placeholder="Genre" required>
@@ -23,9 +23,9 @@
         </section>
         <section id="movie-lists">
             <nav>
-                <button class="tab active" data-tab="all">All Movies</button>
-                <button class="tab" data-tab="watched">Watched</button>
-                <button class="tab" data-tab="to-watch">To Watch</button>
+                <button id="all-movies">All Movies</button>
+                <button id="watched-movies">Watched Movies</button>
+                <button id="to-watch-movies">To Watch Movies</button>
             </nav>
             <div id="search-filter">
                 <input type="text" id="search" placeholder="Search by title">
@@ -42,6 +42,6 @@
             <ul id="movie-list"></ul>
         </section>
     </main>
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
