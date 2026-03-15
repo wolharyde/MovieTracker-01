@@ -16,30 +16,59 @@ main {
     padding: 2rem;
 }
 
-#add-movie-form, #movie-lists, #search-filter {
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
+input, select, button {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
 button {
+    cursor: pointer;
     background-color: #333;
     color: #fff;
     border: none;
     padding: 0.5rem 1rem;
-    cursor: pointer;
 }
 
 button:hover {
     background-color: #555;
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
+.tab {
+    background-color: #f4f4f4;
+    border: none;
+    color: #333;
+}
+
+.tab.active {
+    background-color: #333;
+    color: #fff;
+}
+
+#movie-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.movie-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
 }
 
 @media (max-width: 768px) {
-    main {
-        padding: 1rem;
+    form {
+        flex-direction: column;
+    }
+    
+    #movie-container {
+        grid-template-columns: 1fr;
     }
 }
