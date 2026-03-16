@@ -26,9 +26,9 @@ class MovieTracker {
     }
 
     addEventListeners() {
-        document.getElementById('add-movie-form').addEventListener('submit', this.addMovie.bind(this));
+        document.getElementById('add-movie-form').addEventListener('submit', this.handleAddMovie.bind(this));
         document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', this.changeView.bind(this));
+            tab.addEventListener('click', this.handleTabClick.bind(this));
         });
         document.getElementById('search').addEventListener('input', this.renderMovies.bind(this));
         document.getElementById('filter-genre').addEventListener('change', this.renderMovies.bind(this));
@@ -36,7 +36,7 @@ class MovieTracker {
         document.getElementById('filter-rating').addEventListener('change', this.renderMovies.bind(this));
     }
 
-    addMovie(e) {
+    handleAddMovie(e) {
         e.preventDefault();
         const title = document.getElementById('title').value;
         const releaseYear = parseInt(document.getElementById('releaseYear').value);
@@ -51,56 +51,53 @@ class MovieTracker {
         e.target.reset();
     }
 
-    changeView(e) {
-        this.currentView = e.target.dataset.tab;
+    handleTabClick(e) {
         document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
         e.target.classList.add('active');
+        this.currentView = e.target.dataset.tab;
         this.renderMovies();
+    }
+
+    saveMovies() {
+        localStorage.setItem('movies', JSON.stringify(this.movies));
     }
 
     renderMovies() {
         const movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
-        let filteredMovies = this.filterMovies();
+        const filteredMovies = this.getFilteredMovies();
         filteredMovies.forEach(movie => {
             const li = document.createElement('li');
             li.className = 'movie-item';
             li.innerHTML = `
-                <div>
-                    <h3>${movie.title} (${movie.releaseYear})</h3>
-                    <p>Genre: ${movie.genre}</p>
-                    <p>Status: ${movie.watched ? 'Watched' : 'To Watch'}</p>
-                    ${movie.watched ? `<p>Rating: ${movie.rating || 'Not rated'}</p>` : ''}
-                </div>
-                <div>
-                    <button onclick="movieTracker.toggleWatched('${movie.id}')">${movie.watched ? 'Mark Unwatched' : 'Mark Watched'}</button>
-                    ${movie.watched ? `<input type="number" min="1" max="5" value="${movie.rating || ''}" onchange="movieTracker.updateRating('${movie.id}', this.value)" placeholder="Rate 1-5">` : ''}
-                    <button onclick="movieTracker.removeMovie('${movie.id}')">Remove</button>
-                </div>
+                <h3>${movie.title} (${movie.releaseYear})</h3>
+                <p>Genre: ${movie.genre}</p>
+                <p>Status: ${movie.watched ? 'Watched' : 'To Watch'}</p>
+                ${movie.watched ? `<p>Rating: ${movie.rating || 'Not rated'}</p>` : ''}
+                <button onclick="movieTracker.toggleWatched('${movie.id}')">${movie.watched ? 'Mark as Unwatched' : 'Mark as Watched'}</button>
+                ${movie.watched ? `<input type="number" min="1" max="5" value="${movie.rating || ''}" onchange="movieTracker.updateRating('${movie.id}', this.value)" placeholder="Rate 1-5">` : ''}
+                <button onclick="movieTracker.removeMovie('${movie.id}')">Remove</button>
             `;
             movieList.appendChild(li);
         });
     }
 
-    filterMovies() {
-        let filteredMovies = this.movies;
-        const search = document.getElementById('search').value.toLowerCase();
+    getFilteredMovies() {
+        const searchTerm = document.getElementById('search').value.toLowerCase();
         const genreFilter = document.getElementById('filter-genre').value;
         const yearFilter = document.getElementById('filter-year').value;
         const ratingFilter = document.getElementById('filter-rating').value;
 
-        if (this.currentView === 'watched') {
-            filteredMovies = filteredMovies.filter(movie => movie.watched);
-        } else if (this.currentView === 'to-watch') {
-            filteredMovies = filteredMovies.filter(movie => !movie.watched);
-        }
-
-        return filteredMovies.filter(movie => 
-            movie.title.toLowerCase().includes(search) &&
-            (genreFilter === '' || movie.genre === genreFilter) &&
-            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
-            (ratingFilter === '' || (movie.rating && movie.rating.toString() === ratingFilter))
-        );
+        return this.movies.filter(movie => {
+            const matchesSearch = movie.title.toLowerCase().includes(searchTerm);
+            const matchesGenre = !genreFilter || movie.genre === genreFilter;
+            const matchesYear = !yearFilter || movie.releaseYear.toString() === yearFilter;
+            const matchesRating = !ratingFilter || (movie.watched && movie.rating && movie.rating.toString() === ratingFilter);
+            const matchesView = this.currentView === 'all' || 
+                (this.currentView === 'watched' && movie.watched) || 
+                (this.currentView === 'to-watch' && !movie.watched);
+            return matchesSearch && matchesGenre && matchesYear && matchesRating && matchesView;
+        });
     }
 
     toggleWatched(id) {
@@ -130,10 +127,6 @@ class MovieTracker {
         this.renderMovies();
         this.updateGenreFilter();
         this.updateYearFilter();
-    }
-
-    saveMovies() {
-        localStorage.setItem('movies', JSON.stringify(this.movies));
     }
 
     updateGenreFilter() {
