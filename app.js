@@ -84,17 +84,10 @@ class MovieTracker {
 
     filterMovies() {
         let filteredMovies = this.movies;
-        const searchTerm = document.getElementById('search').value.toLowerCase();
+        const search = document.getElementById('search').value.toLowerCase();
         const genreFilter = document.getElementById('filter-genre').value;
         const yearFilter = document.getElementById('filter-year').value;
         const ratingFilter = document.getElementById('filter-rating').value;
-
-        filteredMovies = filteredMovies.filter(movie => 
-            movie.title.toLowerCase().includes(searchTerm) &&
-            (genreFilter === '' || movie.genre === genreFilter) &&
-            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
-            (ratingFilter === '' || (movie.watched && movie.rating && movie.rating.toString() === ratingFilter))
-        );
 
         if (this.currentView === 'watched') {
             filteredMovies = filteredMovies.filter(movie => movie.watched);
@@ -102,7 +95,12 @@ class MovieTracker {
             filteredMovies = filteredMovies.filter(movie => !movie.watched);
         }
 
-        return filteredMovies;
+        return filteredMovies.filter(movie => 
+            movie.title.toLowerCase().includes(search) &&
+            (genreFilter === '' || movie.genre === genreFilter) &&
+            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
+            (ratingFilter === '' || (movie.rating && movie.rating.toString() === ratingFilter))
+        );
     }
 
     toggleWatched(id) {
@@ -143,7 +141,10 @@ class MovieTracker {
         const genres = [...new Set(this.movies.map(m => m.genre))];
         genreFilter.innerHTML = '<option value="">All Genres</option>';
         genres.forEach(genre => {
-            genreFilter.innerHTML += `<option value="${genre}">${genre}</option>`;
+            const option = document.createElement('option');
+            option.value = genre;
+            option.textContent = genre;
+            genreFilter.appendChild(option);
         });
     }
 
@@ -152,7 +153,10 @@ class MovieTracker {
         const years = [...new Set(this.movies.map(m => m.releaseYear))].sort((a, b) => b - a);
         yearFilter.innerHTML = '<option value="">All Years</option>';
         years.forEach(year => {
-            yearFilter.innerHTML += `<option value="${year}">${year}</option>`;
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearFilter.appendChild(option);
         });
     }
 }
