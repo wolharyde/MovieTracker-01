@@ -18,13 +18,10 @@ header {
     color: #fff;
     text-align: center;
     padding: 1rem;
+    margin-bottom: 2rem;
 }
 
-main {
-    margin-top: 2rem;
-}
-
-h2 {
+h1, h2 {
     margin-bottom: 1rem;
 }
 
@@ -53,6 +50,8 @@ button:hover {
 }
 
 nav {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 1rem;
 }
 
@@ -61,7 +60,6 @@ nav {
     border: none;
     color: black;
     padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
 }
 
 .tab.active {
@@ -86,11 +84,11 @@ nav {
 }
 
 .movie-item button {
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 @media (max-width: 600px) {
-    form, #search-filter {
+    form, nav, #search-filter {
         flex-direction: column;
     }
 }
