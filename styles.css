@@ -16,7 +16,7 @@ main {
     padding: 2rem;
 }
 
-#add-movie, #movie-lists {
+#add-movie-form {
     margin-bottom: 2rem;
 }
 
@@ -28,6 +28,7 @@ form {
 
 input, select, button {
     padding: 0.5rem;
+    font-size: 1rem;
 }
 
 button {
@@ -41,14 +42,27 @@ button:hover {
     background-color: #555;
 }
 
+#movie-lists nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 .tab {
     background-color: #f4f4f4;
-    color: #333;
+    border: none;
+    padding: 0.5rem 1rem;
 }
 
 .tab.active {
     background-color: #333;
     color: #fff;
+}
+
+#search-filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 #movie-list {
