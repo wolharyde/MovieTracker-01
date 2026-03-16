@@ -16,33 +16,30 @@
             <h2>Add Movie</h2>
             <form id="add-movie-form">
                 <input type="text" id="title" placeholder="Title" required>
-                <input type="number" id="year" placeholder="Release Year" required>
+                <input type="number" id="releaseYear" placeholder="Release Year" required>
                 <input type="text" id="genre" placeholder="Genre" required>
                 <button type="submit">Add Movie</button>
             </form>
         </section>
-        <section id="movie-list">
-            <h2>Movie List</h2>
-            <div id="list-controls">
-                <div id="view-tabs">
-                    <button class="tab active" data-view="all">All</button>
-                    <button class="tab" data-view="watched">Watched</button>
-                    <button class="tab" data-view="to-watch">To Watch</button>
-                </div>
-                <div id="search-filter">
-                    <input type="text" id="search" placeholder="Search by title">
-                    <select id="filter-genre">
-                        <option value="">All Genres</option>
-                    </select>
-                    <select id="filter-year">
-                        <option value="">All Years</option>
-                    </select>
-                    <select id="filter-rating">
-                        <option value="">All Ratings</option>
-                    </select>
-                </div>
+        <section id="movie-lists">
+            <nav>
+                <button class="tab active" data-tab="all">All Movies</button>
+                <button class="tab" data-tab="watched">Watched</button>
+                <button class="tab" data-tab="to-watch">To Watch</button>
+            </nav>
+            <div id="search-filter">
+                <input type="text" id="search" placeholder="Search by title">
+                <select id="filter-genre">
+                    <option value="">All Genres</option>
+                </select>
+                <select id="filter-year">
+                    <option value="">All Years</option>
+                </select>
+                <select id="filter-rating">
+                    <option value="">All Ratings</option>
+                </select>
             </div>
-            <ul id="movies"></ul>
+            <ul id="movie-list"></ul>
         </section>
     </main>
     <script src="app.js"></script>
