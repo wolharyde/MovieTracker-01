@@ -16,34 +16,68 @@ main {
     padding: 2rem;
 }
 
-section {
+#add-movie, #movie-lists {
     margin-bottom: 2rem;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+input, select, button {
+    padding: 0.5rem;
+    font-size: 1rem;
 }
 
 button {
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
 }
 
-#movie-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+button:hover {
+    background-color: #555;
+}
+
+nav {
+    margin-bottom: 1rem;
+}
+
+.tab {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.tab.active {
+    background-color: #333;
+    color: #fff;
+}
+
+#search-filter {
+    display: flex;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
-.movie-card {
-    border: 1px solid #ddd;
+#movie-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.movie-item {
+    background-color: #f4f4f4;
+    margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@media (max-width: 600px) {
-    main {
-        padding: 1rem;
-    }
-
-    #movie-list-container {
-        grid-template-columns: 1fr;
+@media (max-width: 768px) {
+    form, #search-filter {
+        flex-direction: column;
     }
 }
