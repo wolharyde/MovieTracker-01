@@ -21,14 +21,14 @@ class MovieTracker {
     init() {
         this.addEventListeners();
         this.renderMovies();
-        this.updateGenreFilter();
+        this.updateFilterOptions();
     }
 
     addEventListeners() {
         document.getElementById('add-movie-form').addEventListener('submit', this.addMovie.bind(this));
-        document.getElementById('all-movies').addEventListener('click', () => this.setView('all'));
-        document.getElementById('watched-movies').addEventListener('click', () => this.setView('watched'));
-        document.getElementById('to-watch-movies').addEventListener('click', () => this.setView('to-watch'));
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', this.changeView.bind(this));
+        });
         document.getElementById('search').addEventListener('input', this.renderMovies.bind(this));
         document.getElementById('filter-genre').addEventListener('change', this.renderMovies.bind(this));
         document.getElementById('filter-year').addEventListener('change', this.renderMovies.bind(this));
@@ -45,12 +45,14 @@ class MovieTracker {
         this.movies.push(movie);
         this.saveMovies();
         this.renderMovies();
-        this.updateGenreFilter();
+        this.updateFilterOptions();
         e.target.reset();
     }
 
-    setView(view) {
-        this.currentView = view;
+    changeView(e) {
+        this.currentView = e.target.dataset.tab;
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        e.target.classList.add('active');
         this.renderMovies();
     }
 
@@ -71,7 +73,7 @@ class MovieTracker {
                 </button>
                 ${movie.watched ? `
                     <input type="number" min="1" max="5" value="${movie.rating || ''}" 
-                    onchange="movieTracker.updateRating('${movie.id}', this.value)">
+                           onchange="movieTracker.updateRating('${movie.id}', this.value)">
                 ` : ''}
                 <button onclick="movieTracker.removeMovie('${movie.id}')">Remove</button>
             `;
@@ -80,24 +82,21 @@ class MovieTracker {
     }
 
     getFilteredMovies() {
-        let filteredMovies = this.movies;
         const searchTerm = document.getElementById('search').value.toLowerCase();
         const genreFilter = document.getElementById('filter-genre').value;
         const yearFilter = document.getElementById('filter-year').value;
         const ratingFilter = document.getElementById('filter-rating').value;
 
-        if (this.currentView === 'watched') {
-            filteredMovies = filteredMovies.filter(movie => movie.watched);
-        } else if (this.currentView === 'to-watch') {
-            filteredMovies = filteredMovies.filter(movie => !movie.watched);
-        }
-
-        return filteredMovies.filter(movie =>
-            movie.title.toLowerCase().includes(searchTerm) &&
-            (genreFilter === '' || movie.genre === genreFilter) &&
-            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
-            (ratingFilter === '' || movie.rating === parseInt(ratingFilter))
-        );
+        return this.movies.filter(movie => {
+            const matchesSearch = movie.title.toLowerCase().includes(searchTerm);
+            const matchesGenre = !genreFilter || movie.genre === genreFilter;
+            const matchesYear = !yearFilter || movie.releaseYear.toString() === yearFilter;
+            const matchesRating = !ratingFilter || (movie.watched && movie.rating && movie.rating.toString() === ratingFilter);
+            const matchesView = this.currentView === 'all' || 
+                                (this.currentView === 'watched' && movie.watched) || 
+                                (this.currentView === 'to-watch' && !movie.watched);
+            return matchesSearch && matchesGenre && matchesYear && matchesRating && matchesView;
+        });
     }
 
     toggleWatched(id) {
@@ -125,23 +124,34 @@ class MovieTracker {
         this.movies = this.movies.filter(m => m.id !== id);
         this.saveMovies();
         this.renderMovies();
-        this.updateGenreFilter();
+        this.updateFilterOptions();
     }
 
     saveMovies() {
         localStorage.setItem('movies', JSON.stringify(this.movies));
     }
 
-    updateGenreFilter() {
-        const genreFilter = document.getElementById('filter-genre');
+    updateFilterOptions() {
         const genres = [...new Set(this.movies.map(m => m.genre))];
-        genreFilter.innerHTML = '<option value="">All Genres</option>';
-        genres.forEach(genre => {
-            const option = document.createElement('option');
-            option.value = genre;
-            option.textContent = genre;
-            genreFilter.appendChild(option);
+        const years = [...new Set(this.movies.map(m => m.releaseYear))];
+        const ratings = [1, 2, 3, 4, 5];
+
+        this.updateSelectOptions('filter-genre', genres);
+        this.updateSelectOptions('filter-year', years);
+        this.updateSelectOptions('filter-rating', ratings);
+    }
+
+    updateSelectOptions(selectId, options) {
+        const select = document.getElementById(selectId);
+        const currentValue = select.value;
+        select.innerHTML = `<option value="">All ${selectId.split('-')[1].charAt(0).toUpperCase() + selectId.split('-')[1].slice(1)}s</option>`;
+        options.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option;
+            optionElement.textContent = option;
+            select.appendChild(optionElement);
         });
+        select.value = currentValue;
     }
 }
 
