@@ -16,7 +16,7 @@ main {
     padding: 2rem;
 }
 
-section {
+#add-movie, #movie-lists {
     margin-bottom: 2rem;
 }
 
@@ -28,7 +28,6 @@ form {
 
 input, select, button {
     padding: 0.5rem;
-    font-size: 1rem;
 }
 
 button {
@@ -42,19 +41,33 @@ button:hover {
     background-color: #555;
 }
 
-#movie-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+.tab {
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-.movie-card {
-    border: 1px solid #ccc;
+.tab.active {
+    background-color: #333;
+    color: #fff;
+}
+
+#search-filter {
+    margin-bottom: 1rem;
+}
+
+#movie-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.movie-item {
+    background-color: #f4f4f4;
+    margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 5px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     form {
         flex-direction: column;
     }
