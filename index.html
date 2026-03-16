@@ -12,34 +12,25 @@
         <h1>MovieTracker-01</h1>
     </header>
     <main>
-        <section id="add-movie">
-            <h2>Add Movie</h2>
-            <form id="add-movie-form">
-                <input type="text" id="title" placeholder="Title" required>
-                <input type="number" id="releaseYear" placeholder="Release Year" required>
-                <input type="text" id="genre" placeholder="Genre" required>
-                <button type="submit">Add Movie</button>
-            </form>
+        <section id="add-movie-form">
+            <h2>Add a Movie</h2>
+            <!-- Add movie form will go here -->
         </section>
         <section id="movie-lists">
             <nav>
-                <button id="all-movies">All Movies</button>
-                <button id="watched-movies">Watched Movies</button>
-                <button id="to-watch-movies">To Watch Movies</button>
+                <ul>
+                    <li><a href="#all-movies">All Movies</a></li>
+                    <li><a href="#watched-movies">Watched</a></li>
+                    <li><a href="#to-watch-movies">To Watch</a></li>
+                </ul>
             </nav>
-            <div id="movie-list"></div>
+            <div id="movie-display">
+                <!-- Movie list will be displayed here -->
+            </div>
         </section>
         <section id="search-filter">
-            <input type="text" id="search" placeholder="Search by title">
-            <select id="filter-genre">
-                <option value="">All Genres</option>
-            </select>
-            <select id="filter-year">
-                <option value="">All Years</option>
-            </select>
-            <select id="filter-rating">
-                <option value="">All Ratings</option>
-            </select>
+            <h2>Search and Filter</h2>
+            <!-- Search and filter options will go here -->
         </section>
     </main>
     <script src="app.js"></script>
