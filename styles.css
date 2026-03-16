@@ -42,28 +42,6 @@ button:hover {
     background-color: #555;
 }
 
-nav {
-    margin-bottom: 1rem;
-}
-
-.tab {
-    background-color: #f4f4f4;
-    border: none;
-    color: #333;
-    padding: 0.5rem 1rem;
-}
-
-.tab.active {
-    background-color: #333;
-    color: #fff;
-}
-
-#search-filter {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
 #movie-list {
     list-style-type: none;
     padding: 0;
@@ -73,13 +51,11 @@ nav {
     background-color: #f4f4f4;
     margin-bottom: 1rem;
     padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 5px;
 }
 
 @media (max-width: 768px) {
-    form, #search-filter {
+    form {
         flex-direction: column;
     }
 }
