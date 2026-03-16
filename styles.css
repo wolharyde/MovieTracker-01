@@ -16,7 +16,7 @@ main {
     padding: 2rem;
 }
 
-section {
+#add-movie, #movie-lists {
     margin-bottom: 2rem;
 }
 
@@ -42,20 +42,61 @@ button:hover {
     background-color: #555;
 }
 
-#movie-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+nav {
+    margin-bottom: 1rem;
+}
+
+.tab {
+    background-color: #f4f4f4;
+    border: none;
+    color: #333;
+}
+
+.tab.active {
+    background-color: #333;
+    color: #fff;
+}
+
+#search-filter {
+    display: flex;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
-.movie-card {
-    border: 1px solid #ccc;
+#movie-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.movie-item {
+    background-color: #f4f4f4;
+    margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@media (max-width: 600px) {
-    form {
+.movie-info {
+    flex-grow: 1;
+}
+
+.movie-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    form, #search-filter {
         flex-direction: column;
+    }
+    
+    .movie-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .movie-actions {
+        margin-top: 1rem;
     }
 }
