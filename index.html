@@ -23,19 +23,23 @@
         </section>
         <section id="movie-lists">
             <nav>
-                <button id="all-movies">All Movies</button>
-                <button id="watched-movies">Watched Movies</button>
-                <button id="to-watch-movies">To Watch Movies</button>
+                <button class="tab active" data-tab="all">All Movies</button>
+                <button class="tab" data-tab="watched">Watched</button>
+                <button class="tab" data-tab="to-watch">To Watch</button>
             </nav>
-            <div id="movie-list"></div>
-        </section>
-        <section id="search-filter">
-            <input type="text" id="search" placeholder="Search by title">
-            <select id="filter-genre">
-                <option value="">All Genres</option>
-            </select>
-            <input type="number" id="filter-year" placeholder="Filter by year">
-            <input type="number" id="filter-rating" min="1" max="5" placeholder="Filter by rating">
+            <div id="search-filter">
+                <input type="text" id="search" placeholder="Search by title">
+                <select id="filter-genre">
+                    <option value="">All Genres</option>
+                </select>
+                <select id="filter-year">
+                    <option value="">All Years</option>
+                </select>
+                <select id="filter-rating">
+                    <option value="">All Ratings</option>
+                </select>
+            </div>
+            <ul id="movie-list"></ul>
         </section>
     </main>
     <script src="app.js"></script>
