@@ -1,15 +1,8 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -20,14 +13,17 @@ header {
 }
 
 main {
-    margin-top: 2rem;
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 2rem;
 }
 
 form {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 2rem;
+    gap: 1rem;
 }
 
 input, select, button {
@@ -40,56 +36,26 @@ button {
     background-color: #333;
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
 }
 
 button:hover {
     background-color: #555;
 }
 
-nav {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-.tab {
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-.tab.active {
-    background-color: #333;
-    color: #fff;
-}
-
-#search-filter {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
 #movie-list {
-    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
-.movie-item {
-    background-color: #f4f4f4;
+.movie-card {
+    border: 1px solid #ccc;
     padding: 1rem;
-    margin-bottom: 1rem;
     border-radius: 5px;
 }
 
-.movie-item h3 {
-    margin-bottom: 0.5rem;
-}
-
-.movie-item p {
-    margin-bottom: 0.5rem;
-}
-
 @media (max-width: 600px) {
-    form, #search-filter {
+    form {
         flex-direction: column;
     }
 }
