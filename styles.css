@@ -83,10 +83,6 @@ nav {
     margin-bottom: 0.5rem;
 }
 
-.movie-item button {
-    margin-right: 0.5rem;
-}
-
 @media (max-width: 600px) {
     form, #search-filter {
         flex-direction: column;
