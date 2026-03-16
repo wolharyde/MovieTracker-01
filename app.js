@@ -22,14 +22,13 @@ class MovieTracker {
         this.addEventListeners();
         this.renderMovies();
         this.updateGenreFilter();
-        this.updateYearFilter();
     }
 
     addEventListeners() {
         document.getElementById('add-movie-form').addEventListener('submit', this.addMovie.bind(this));
-        document.getElementById('all-movies').addEventListener('click', () => this.changeView('all'));
-        document.getElementById('watched-movies').addEventListener('click', () => this.changeView('watched'));
-        document.getElementById('to-watch-movies').addEventListener('click', () => this.changeView('to-watch'));
+        document.getElementById('all-movies').addEventListener('click', () => this.setView('all'));
+        document.getElementById('watched-movies').addEventListener('click', () => this.setView('watched'));
+        document.getElementById('to-watch-movies').addEventListener('click', () => this.setView('to-watch'));
         document.getElementById('search').addEventListener('input', this.renderMovies.bind(this));
         document.getElementById('filter-genre').addEventListener('change', this.renderMovies.bind(this));
         document.getElementById('filter-year').addEventListener('change', this.renderMovies.bind(this));
@@ -47,11 +46,10 @@ class MovieTracker {
         this.saveMovies();
         this.renderMovies();
         this.updateGenreFilter();
-        this.updateYearFilter();
         e.target.reset();
     }
 
-    changeView(view) {
+    setView(view) {
         this.currentView = view;
         this.renderMovies();
     }
@@ -59,41 +57,47 @@ class MovieTracker {
     renderMovies() {
         const movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
+        const filteredMovies = this.getFilteredMovies();
+        filteredMovies.forEach(movie => {
+            const li = document.createElement('li');
+            li.className = 'movie-item';
+            li.innerHTML = `
+                <h3>${movie.title} (${movie.releaseYear})</h3>
+                <p>Genre: ${movie.genre}</p>
+                <p>Status: ${movie.watched ? 'Watched' : 'To Watch'}</p>
+                ${movie.watched ? `<p>Rating: ${movie.rating || 'Not rated'}</p>` : ''}
+                <button onclick="movieTracker.toggleWatched('${movie.id}')">
+                    ${movie.watched ? 'Mark as Unwatched' : 'Mark as Watched'}
+                </button>
+                ${movie.watched ? `
+                    <input type="number" min="1" max="5" value="${movie.rating || ''}" 
+                    onchange="movieTracker.updateRating('${movie.id}', this.value)">
+                ` : ''}
+                <button onclick="movieTracker.removeMovie('${movie.id}')">Remove</button>
+            `;
+            movieList.appendChild(li);
+        });
+    }
+
+    getFilteredMovies() {
+        let filteredMovies = this.movies;
         const searchTerm = document.getElementById('search').value.toLowerCase();
         const genreFilter = document.getElementById('filter-genre').value;
         const yearFilter = document.getElementById('filter-year').value;
         const ratingFilter = document.getElementById('filter-rating').value;
 
-        this.movies
-            .filter(movie => {
-                const matchesSearch = movie.title.toLowerCase().includes(searchTerm);
-                const matchesGenre = genreFilter === '' || movie.genre === genreFilter;
-                const matchesYear = yearFilter === '' || movie.releaseYear.toString() === yearFilter;
-                const matchesRating = ratingFilter === '' || (movie.rating && movie.rating.toString() === ratingFilter);
-                const matchesView = this.currentView === 'all' || 
-                    (this.currentView === 'watched' && movie.watched) || 
-                    (this.currentView === 'to-watch' && !movie.watched);
-                return matchesSearch && matchesGenre && matchesYear && matchesRating && matchesView;
-            })
-            .forEach(movie => {
-                const li = document.createElement('li');
-                li.className = 'movie-item';
-                li.innerHTML = `
-                    <h3>${movie.title} (${movie.releaseYear})</h3>
-                    <p>Genre: ${movie.genre}</p>
-                    <p>Status: ${movie.watched ? 'Watched' : 'To Watch'}</p>
-                    ${movie.watched ? `<p>Rating: ${movie.rating || 'Not rated'}</p>` : ''}
-                    <button onclick="movieTracker.toggleWatched('${movie.id}')">
-                        ${movie.watched ? 'Mark as Unwatched' : 'Mark as Watched'}
-                    </button>
-                    ${movie.watched ? `
-                        <input type="number" min="1" max="5" value="${movie.rating || ''}" 
-                        onchange="movieTracker.updateRating('${movie.id}', this.value)">
-                    ` : ''}
-                    <button onclick="movieTracker.removeMovie('${movie.id}')">Remove</button>
-                `;
-                movieList.appendChild(li);
-            });
+        if (this.currentView === 'watched') {
+            filteredMovies = filteredMovies.filter(movie => movie.watched);
+        } else if (this.currentView === 'to-watch') {
+            filteredMovies = filteredMovies.filter(movie => !movie.watched);
+        }
+
+        return filteredMovies.filter(movie =>
+            movie.title.toLowerCase().includes(searchTerm) &&
+            (genreFilter === '' || movie.genre === genreFilter) &&
+            (yearFilter === '' || movie.releaseYear.toString() === yearFilter) &&
+            (ratingFilter === '' || movie.rating === parseInt(ratingFilter))
+        );
     }
 
     toggleWatched(id) {
@@ -122,7 +126,6 @@ class MovieTracker {
         this.saveMovies();
         this.renderMovies();
         this.updateGenreFilter();
-        this.updateYearFilter();
     }
 
     saveMovies() {
@@ -138,18 +141,6 @@ class MovieTracker {
             option.value = genre;
             option.textContent = genre;
             genreFilter.appendChild(option);
-        });
-    }
-
-    updateYearFilter() {
-        const yearFilter = document.getElementById('filter-year');
-        const years = [...new Set(this.movies.map(m => m.releaseYear))].sort((a, b) => b - a);
-        yearFilter.innerHTML = '<option value="">All Years</option>';
-        years.forEach(year => {
-            const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            yearFilter.appendChild(option);
         });
     }
 }
